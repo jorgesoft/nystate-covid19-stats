@@ -11,6 +11,7 @@ class ChartsPanel extends Component {
         loading: true,
         loading2: true,
         error: false,
+        errorMessage: '',
         timeframeStart: null,
         timeframeEnd: null,
     }
@@ -32,18 +33,30 @@ class ChartsPanel extends Component {
     }
 
     componentDidMount () {
-        fetch('/data/ny_current.json')
-            .then( response => response.json() )
+        const basePath = import.meta.env.BASE_URL || '/';
+
+        fetch(`${basePath}data/ny_current.json`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to load ny_current.json (${response.status})`);
+                }
+                return response.json();
+            })
             .then( data => {
                 this.setState({current: data, loading: false});
             } )
             .catch(error => {
                 console.log(error);
-                this.setState({error: true, loading: false});
+                this.setState({error: true, errorMessage: error.message, loading: false});
             });
 
-        fetch('/data/ny_timeseries.json')
-            .then( response => response.json() )
+        fetch(`${basePath}data/ny_timeseries.json`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to load ny_timeseries.json (${response.status})`);
+                }
+                return response.json();
+            })
             .then( data => {
                 const validTimeseries = (data.actualsTimeseries || []).filter((entry) =>
                     entry && entry.date && entry.cases != null && entry.newCases != null
@@ -61,7 +74,7 @@ class ChartsPanel extends Component {
             } )
             .catch(error => {
                 console.log(error);
-                this.setState({error: true, loading2: false});
+                this.setState({error: true, errorMessage: error.message, loading2: false});
             });
 
     }
@@ -69,13 +82,13 @@ class ChartsPanel extends Component {
     render () {
         let displayTotal = <Spinner animation="border" role="status"><span className="sr-only">Loading...</span></Spinner>
         //console.log( this.state.current );
-        if (!this.state.loading){
+        if (!this.state.loading && this.state.current){
             displayTotal = <TotalCard current={this.state.current}/>;
         }
 
         let displayLine = <Spinner animation="border" role="status"><span className="sr-only">Loading...</span></Spinner>;
         //console.log( this.state.current );
-        if (!this.state.loading2){
+        if (!this.state.loading2 && this.state.historic){
             displayLine = <LineChart historic={this.state.historic}/>;
             //console.log( this.state.historic );
         }
@@ -97,6 +110,11 @@ class ChartsPanel extends Component {
                 <Row>
                     <p className="text-start fs-5 mb-2">Total current data:</p>
                 </Row>
+                {this.state.error && (
+                <Row>
+                    <p className="text-start text-danger mb-3">Unable to load one or more data files. {this.state.errorMessage}</p>
+                </Row>
+                )}
                 <Row className='mb-3'>
                     <Col>
                     {displayTotal}

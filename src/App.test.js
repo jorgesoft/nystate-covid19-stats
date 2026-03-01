@@ -11,6 +11,8 @@ test('renders app title and github link', async () => {
 
   vi.stubGlobal('fetch', vi.fn()
     .mockResolvedValueOnce({
+      ok: true,
+      status: 200,
       json: async () => ({
         actuals: {
           cases: 1,
@@ -23,6 +25,8 @@ test('renders app title and github link', async () => {
       })
     })
     .mockResolvedValueOnce({
+      ok: true,
+      status: 200,
       json: async () => ({
         actualsTimeseries: timeseries,
       })
