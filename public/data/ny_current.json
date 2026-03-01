@@ -1,0 +1,11 @@
+{
+  "_note": "PLACEHOLDER — run `node scripts/fetch-data.js` to replace with real archived data before the API shuts down on 2026-03-11",
+  "actuals": {
+    "cases": null,
+    "newCases": null,
+    "deaths": null,
+    "newDeaths": null,
+    "positiveTests": null,
+    "negativeTests": null
+  }
+}

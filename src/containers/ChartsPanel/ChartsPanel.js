@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import TotalCard from '../../components/TotalCard/TotalCard.js';
 import LineChart from '../../components/LineChart/LineChart.js';
@@ -16,36 +15,33 @@ class ChartsPanel extends Component {
     }
 
     componentDidMount () {
-        axios.get( 'https://api.covidactnow.org/v2/state/NY.json?apiKey=1da95672607a441580c5b16c707c79bd' )
-            .then( response => {
-                this.setState({current: response.data});
-                //console.log( this.state.current.actuals );
-                this.setState({loading: false});
+        fetch('/data/ny_current.json')
+            .then( response => response.json() )
+            .then( data => {
+                this.setState({current: data, loading: false});
             } )
             .catch(error => {
                 console.log(error);
-                this.setState({error: false});
+                this.setState({error: true, loading: false});
             });
 
-        axios.get( 'https://api.covidactnow.org/v2/state/NY.timeseries.json?apiKey=1da95672607a441580c5b16c707c79bd' )
-            .then( res => {
-                const actualsTimeseries = res.data.actualsTimeseries.reverse();
+        fetch('/data/ny_timeseries.json')
+            .then( response => response.json() )
+            .then( data => {
+                const actualsTimeseries = data.actualsTimeseries.reverse();
                 const slicedTime = [];
                 const maxVal = 10;
                 const delta = Math.floor(actualsTimeseries.length / maxVal);
-                
+
                 for ( let i=0; i < actualsTimeseries.length; i=i+delta) {
                     slicedTime.push(actualsTimeseries[i]);
                 }
 
-                this.setState({historic: slicedTime.reverse()});
-                //this.setState({today: this.state.historic['9']['date']});
-                //console.log( this.state.historic['0'] );
-                this.setState({loading2: false});
+                this.setState({historic: slicedTime.reverse(), loading2: false});
             } )
             .catch(error => {
                 console.log(error);
-                this.setState({error: false});
+                this.setState({error: true, loading2: false});
             });
 
     }
@@ -69,7 +65,7 @@ class ChartsPanel extends Component {
             <div >
             <Container>
                 <Row>
-                    <h5 className="Header">Using data from <a href="https://covidactnow.org/data-api" target="_blank" rel="noreferrer">Covid Act Now</a></h5>
+                    <h5 className="Header">Using archived data from <a href="https://covidactnow.org/data-api" target="_blank" rel="noreferrer">Covid Act Now</a></h5>
                 </Row>
                 <Row>
                     <p className="Header">Total current data:</p>
