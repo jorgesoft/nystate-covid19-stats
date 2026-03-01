@@ -1,9 +1,12 @@
 import React from 'react';
 
 import { Card, Container, Row, Col, ListGroup } from 'react-bootstrap';
-import { Doughnut  } from '@reactchartjs/react-chart.js';
+import { Doughnut  } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import './TotalCard.css';
 import CountUp from 'react-countup';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 const TotalCard = (props) => (

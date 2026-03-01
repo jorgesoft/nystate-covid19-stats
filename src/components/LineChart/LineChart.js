@@ -1,6 +1,26 @@
 import React from 'react'
-import { Bar, Line } from '@reactchartjs/react-chart.js';
+import { Bar, Line } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    LineElement,
+    PointElement,
+    Tooltip,
+    Legend
+} from 'chart.js';
 import '../LineChart/LineChart.css';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    LineElement,
+    PointElement,
+    Tooltip,
+    Legend
+);
 
 const LineChart = (props) => (
     <div className="disp">
