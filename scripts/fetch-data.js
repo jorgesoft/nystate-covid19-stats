@@ -19,7 +19,7 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const API_KEY = '1da95672607a441580c5b16c707c79bd';
+const API_KEY = '';
 const BASE_URL = 'https://api.covidactnow.org/v2';
 const OUT_DIR = path.join(__dirname, '..', 'public', 'data');
 

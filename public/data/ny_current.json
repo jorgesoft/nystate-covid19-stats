@@ -1,11 +1,381 @@
 {
-  "_note": "PLACEHOLDER — run `node scripts/fetch-data.js` to replace with real archived data before the API shuts down on 2026-03-11",
+  "fips": "36",
+  "country": "US",
+  "state": "NY",
+  "county": null,
+  "hsa": null,
+  "hsaName": null,
+  "level": "state",
+  "lat": null,
+  "locationId": "iso1:us#iso2:us-ny",
+  "long": null,
+  "population": 19453561,
+  "hsaPopulation": null,
+  "metrics": {
+    "testPositivityRatio": 0.119,
+    "testPositivityRatioDetails": {
+      "source": "other"
+    },
+    "caseDensity": null,
+    "weeklyNewCasesPer100k": null,
+    "contactTracerCapacityRatio": null,
+    "infectionRate": null,
+    "infectionRateCI90": null,
+    "icuCapacityRatio": null,
+    "bedsWithCovidPatientsRatio": null,
+    "weeklyCovidAdmissionsPer100k": null,
+    "vaccinationsInitiatedRatio": 0.947,
+    "vaccinationsCompletedRatio": 0.81,
+    "vaccinationsAdditionalDoseRatio": 0.398,
+    "vaccinationsFall2022BivalentBoosterRatio": 0.177
+  },
+  "riskLevels": {
+    "overall": 4,
+    "testPositivityRatio": 2,
+    "caseDensity": 4,
+    "contactTracerCapacityRatio": 4,
+    "infectionRate": 4,
+    "icuCapacityRatio": 4
+  },
+  "cdcTransmissionLevel": 3,
+  "communityLevels": {
+    "cdcCommunityLevel": null,
+    "canCommunityLevel": null
+  },
   "actuals": {
-    "cases": null,
-    "newCases": null,
-    "deaths": null,
-    "newDeaths": null,
-    "positiveTests": null,
-    "negativeTests": null
-  }
+    "cases": 6838769,
+    "deaths": 77522,
+    "positiveTests": 7669983,
+    "negativeTests": 100948592,
+    "contactTracers": 9620,
+    "hospitalBeds": {
+      "capacity": 46586,
+      "currentUsageTotal": 34125,
+      "currentUsageCovid": 274,
+      "weeklyCovidAdmissions": 395
+    },
+    "hsaHospitalBeds": {
+      "capacity": null,
+      "currentUsageTotal": null,
+      "currentUsageCovid": null,
+      "weeklyCovidAdmissions": null
+    },
+    "icuBeds": {
+      "capacity": 4530,
+      "currentUsageTotal": 3141,
+      "currentUsageCovid": 32
+    },
+    "hsaIcuBeds": {
+      "capacity": null,
+      "currentUsageTotal": null,
+      "currentUsageCovid": null
+    },
+    "newCases": 3732,
+    "newDeaths": 44,
+    "vaccinesDistributed": 61302975,
+    "vaccinationsInitiated": 18427712,
+    "vaccinationsCompleted": 15763340,
+    "vaccinationsAdditionalDose": 7736198,
+    "vaccinationsFall2022BivalentBooster": 3434920,
+    "vaccinesAdministered": 45177512,
+    "vaccinesAdministeredDemographics": null,
+    "vaccinationsInitiatedDemographics": null
+  },
+  "annotations": {
+    "cases": {
+      "sources": [
+        {
+          "type": "other",
+          "url": [
+            "https://github.com/nytimes/covid-19-data",
+            "https://covid.cdc.gov/covid-data-tracker/#datatracker-home"
+          ],
+          "name": "Daily-resolution NYT data before 2023-03-23, weekly-resolution CDC data afterwards."
+        }
+      ],
+      "anomalies": []
+    },
+    "deaths": {
+      "sources": [
+        {
+          "type": "other",
+          "url": [
+            "https://github.com/nytimes/covid-19-data",
+            "https://covid.cdc.gov/covid-data-tracker/#datatracker-home"
+          ],
+          "name": "Daily-resolution NYT data before 2023-03-23, weekly-resolution CDC data afterwards."
+        }
+      ],
+      "anomalies": []
+    },
+    "positiveTests": {
+      "sources": [
+        {
+          "type": "HHSTesting",
+          "url": "https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb",
+          "name": "Department of Health and Human Services"
+        }
+      ],
+      "anomalies": [
+        {
+          "date": "2024-05-28",
+          "type": "cumulative_tail_truncated",
+          "original_observation": 7669983
+        }
+      ]
+    },
+    "negativeTests": {
+      "sources": [
+        {
+          "type": "HHSTesting",
+          "url": "https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb",
+          "name": "Department of Health and Human Services"
+        }
+      ],
+      "anomalies": [
+        {
+          "date": "2024-05-28",
+          "type": "cumulative_tail_truncated",
+          "original_observation": 100948593
+        }
+      ]
+    },
+    "contactTracers": {
+      "sources": [
+        {
+          "type": "TestAndTrace",
+          "url": null,
+          "name": null
+        }
+      ],
+      "anomalies": []
+    },
+    "hospitalBeds": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh",
+          "name": "Department of Health and Human Services"
+        }
+      ],
+      "anomalies": []
+    },
+    "hsaHospitalBeds": null,
+    "icuBeds": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh",
+          "name": "Department of Health and Human Services"
+        }
+      ],
+      "anomalies": []
+    },
+    "hsaIcuBeds": null,
+    "newCases": {
+      "sources": [],
+      "anomalies": [
+        {
+          "date": "2021-03-24",
+          "type": "zscore_outlier",
+          "original_observation": 20184
+        }
+      ]
+    },
+    "newDeaths": {
+      "sources": [],
+      "anomalies": [
+        {
+          "date": "2022-11-11",
+          "type": "zscore_outlier",
+          "original_observation": 3732
+        },
+        {
+          "date": "2022-12-08",
+          "type": "zscore_outlier",
+          "original_observation": 302
+        },
+        {
+          "date": "2023-01-04",
+          "type": "zscore_outlier",
+          "original_observation": 350
+        },
+        {
+          "date": "2023-03-22",
+          "type": "zscore_outlier",
+          "original_observation": 151
+        }
+      ]
+    },
+    "vaccinesDistributed": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc",
+          "name": "Centers for Disease Control and Prevention"
+        }
+      ],
+      "anomalies": []
+    },
+    "vaccinationsInitiated": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc",
+          "name": "Centers for Disease Control and Prevention"
+        }
+      ],
+      "anomalies": []
+    },
+    "vaccinationsCompleted": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc",
+          "name": "Centers for Disease Control and Prevention"
+        }
+      ],
+      "anomalies": []
+    },
+    "vaccinationsAdditionalDose": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc",
+          "name": "Centers for Disease Control and Prevention"
+        }
+      ],
+      "anomalies": []
+    },
+    "vaccinationsFall2022BivalentBooster": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc",
+          "name": "Centers for Disease Control and Prevention"
+        }
+      ],
+      "anomalies": []
+    },
+    "vaccinesAdministered": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc",
+          "name": "Centers for Disease Control and Prevention"
+        }
+      ],
+      "anomalies": []
+    },
+    "testPositivityRatio": {
+      "sources": [
+        {
+          "type": "HHSTesting",
+          "url": "https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb",
+          "name": "Department of Health and Human Services"
+        }
+      ],
+      "anomalies": [
+        {
+          "date": "2024-05-28",
+          "type": "cumulative_tail_truncated",
+          "original_observation": 100948593
+        },
+        {
+          "date": "2024-05-28",
+          "type": "cumulative_tail_truncated",
+          "original_observation": 7669983
+        }
+      ]
+    },
+    "caseDensity": {
+      "sources": [
+        {
+          "type": "other",
+          "url": [
+            "https://github.com/nytimes/covid-19-data",
+            "https://covid.cdc.gov/covid-data-tracker/#datatracker-home"
+          ],
+          "name": "Daily-resolution NYT data before 2023-03-23, weekly-resolution CDC data afterwards."
+        }
+      ],
+      "anomalies": []
+    },
+    "weeklyNewCasesPer100k": {
+      "sources": [
+        {
+          "type": "other",
+          "url": [
+            "https://github.com/nytimes/covid-19-data",
+            "https://covid.cdc.gov/covid-data-tracker/#datatracker-home"
+          ],
+          "name": "Daily-resolution NYT data before 2023-03-23, weekly-resolution CDC data afterwards."
+        }
+      ],
+      "anomalies": []
+    },
+    "contactTracerCapacityRatio": {
+      "sources": [
+        {
+          "type": "TestAndTrace",
+          "url": null,
+          "name": null
+        }
+      ],
+      "anomalies": []
+    },
+    "infectionRate": {
+      "sources": [
+        {
+          "type": "other",
+          "url": [
+            "https://github.com/nytimes/covid-19-data",
+            "https://covid.cdc.gov/covid-data-tracker/#datatracker-home"
+          ],
+          "name": "Daily-resolution NYT data before 2023-03-23, weekly-resolution CDC data afterwards."
+        }
+      ],
+      "anomalies": []
+    },
+    "infectionRateCI90": {
+      "sources": [
+        {
+          "type": "other",
+          "url": [
+            "https://github.com/nytimes/covid-19-data",
+            "https://covid.cdc.gov/covid-data-tracker/#datatracker-home"
+          ],
+          "name": "Daily-resolution NYT data before 2023-03-23, weekly-resolution CDC data afterwards."
+        }
+      ],
+      "anomalies": []
+    },
+    "icuCapacityRatio": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh",
+          "name": "Department of Health and Human Services"
+        }
+      ],
+      "anomalies": []
+    },
+    "bedsWithCovidPatientsRatio": {
+      "sources": [
+        {
+          "type": "other",
+          "url": "https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh",
+          "name": "Department of Health and Human Services"
+        }
+      ],
+      "anomalies": []
+    },
+    "weeklyCovidAdmissionsPer100k": null,
+    "vaccinationsInitiatedRatio": null,
+    "vaccinationsCompletedRatio": null,
+    "vaccinationsAdditionalDoseRatio": null,
+    "vaccinationsFall2022BivalentBoosterRatio": null
+  },
+  "lastUpdatedDate": "2024-07-21",
+  "url": "https://covidactnow.org/us/new_york-ny"
 }
