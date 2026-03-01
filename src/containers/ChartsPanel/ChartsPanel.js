@@ -4,7 +4,6 @@ import TotalCard from '../../components/TotalCard/TotalCard.js';
 import LineChart from '../../components/LineChart/LineChart.js';
 import {Container, Row, Col} from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
-import './ChartsPanel.css';
 
 
 class ChartsPanel extends Component {
@@ -12,6 +11,24 @@ class ChartsPanel extends Component {
         loading: true,
         loading2: true,
         error: false,
+        timeframeStart: null,
+        timeframeEnd: null,
+    }
+
+    sampleTimeseries = (series, maxPoints) => {
+        if (series.length <= maxPoints) {
+            return series;
+        }
+
+        const indices = new Set();
+        for (let i = 0; i < maxPoints; i += 1) {
+            const index = Math.round((i * (series.length - 1)) / (maxPoints - 1));
+            indices.add(index);
+        }
+
+        return [...indices]
+            .sort((a, b) => a - b)
+            .map((index) => series[index]);
     }
 
     componentDidMount () {
@@ -28,16 +45,19 @@ class ChartsPanel extends Component {
         fetch('/data/ny_timeseries.json')
             .then( response => response.json() )
             .then( data => {
-                const actualsTimeseries = data.actualsTimeseries.reverse();
-                const slicedTime = [];
-                const maxVal = 10;
-                const delta = Math.floor(actualsTimeseries.length / maxVal);
+                const validTimeseries = (data.actualsTimeseries || []).filter((entry) =>
+                    entry && entry.date && entry.cases != null && entry.newCases != null
+                );
+                const sampledTime = this.sampleTimeseries(validTimeseries, 10);
+                const timeframeStart = validTimeseries.length > 0 ? validTimeseries[0].date : null;
+                const timeframeEnd = validTimeseries.length > 0 ? validTimeseries[validTimeseries.length - 1].date : null;
 
-                for ( let i=0; i < actualsTimeseries.length; i=i+delta) {
-                    slicedTime.push(actualsTimeseries[i]);
-                }
-
-                this.setState({historic: slicedTime.reverse(), loading2: false});
+                this.setState({
+                    historic: sampledTime,
+                    timeframeStart,
+                    timeframeEnd,
+                    loading2: false,
+                });
             } )
             .catch(error => {
                 console.log(error);
@@ -59,24 +79,31 @@ class ChartsPanel extends Component {
             displayLine = <LineChart historic={this.state.historic}/>;
             //console.log( this.state.historic );
         }
+
+        const timeframeLabel = this.state.timeframeStart && this.state.timeframeEnd
+            ? `${this.state.timeframeStart} to ${this.state.timeframeEnd}`
+            : 'Loading historical timeframe...';
         
 
         return (
-            <div >
-            <Container>
+            <div className="px-2">
+            <Container className="py-3">
                 <Row>
-                    <h5 className="Header">Using archived data from <a href="https://covidactnow.org/data-api" target="_blank" rel="noreferrer">Covid Act Now</a></h5>
+                    <h5 className="text-start fw-semibold fs-4 mb-2">Using archived data from <a href="https://covidactnow.org/data-api" target="_blank" rel="noreferrer">Covid Act Now</a></h5>
                 </Row>
                 <Row>
-                    <p className="Header">Total current data:</p>
+                    <p className="text-start fs-6 mb-3"><strong>Data timeframe:</strong> {timeframeLabel}</p>
                 </Row>
-                <Row className='Part'>
+                <Row>
+                    <p className="text-start fs-5 mb-2">Total current data:</p>
+                </Row>
+                <Row className='mb-3'>
                     <Col>
                     {displayTotal}
                     </Col>
                 </Row>
                 <Row>
-                    <p className="Header">Total historical data:</p>
+                    <p className="text-start fs-5 mb-2">Total historical data:</p>
                 </Row>
                 <Row>
                     <Col>

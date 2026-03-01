@@ -10,7 +10,7 @@ import {
     Tooltip,
     Legend
 } from 'chart.js';
-import '../LineChart/LineChart.css';
+import { Card, Col, Row } from 'react-bootstrap';
 
 ChartJS.register(
     CategoryScale,
@@ -22,102 +22,99 @@ ChartJS.register(
     Legend
 );
 
-const LineChart = (props) => (
-    <div className="disp">
-        <div id='first'>
-        <Bar 
-            data={{
-            labels: [props.historic[0]['date'],
-            props.historic[1]['date'],
-            props.historic[2]['date'],
-            props.historic[3]['date'],
-            props.historic[4]['date'],
-            props.historic[5]['date'],
-            props.historic[6]['date'],
-            props.historic[7]['date'],
-            props.historic[8]['date'],
-            props.historic[9]['date'],
-            ],
-            datasets: [
-                {
-                label: 'Historical Total Cases',
-                borderWidth: 1,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)'
-                    ],
-                borderColor: [
-                'rgba(255, 99, 132, 1)'
-                ],
-                hoverBackgroundColor: "#ed873e",
-                hoverBorderColor: "#e35f00",
-                data: [props.historic[0]['cases'],
-                props.historic[1]['cases'],
-                props.historic[2]['cases'],
-                props.historic[3]['cases'],
-                props.historic[4]['cases'],
-                props.historic[5]['cases'],
-                props.historic[6]['cases'],
-                props.historic[7]['cases'],
-                props.historic[8]['cases'],
-                props.historic[9]['cases']
-                ],
-                }
-                ]
-            }}
-            options={{
-                responsive: true,
-                maintainAspectRatio: false,
-            }}
-        />
-        </div>
-        <div id='second'>
-        <Line 
-            data={{
-            labels: [props.historic[0]['date'],
-            props.historic[1]['date'],
-            props.historic[2]['date'],
-            props.historic[3]['date'],
-            props.historic[4]['date'],
-            props.historic[5]['date'],
-            props.historic[6]['date'],
-            props.historic[7]['date'],
-            props.historic[8]['date'],
-            props.historic[9]['date'],
-                ],
-                datasets: [
-                    {
-                        label: 'Historical New Cases',
-                        borderWidth: 1,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 1)'
-                            ],
-                        borderColor: [
-                        'rgba(255, 99, 132, 1)'
-                        ],
-                        fill: false,
-                        hoverBackgroundColor: "#ed873e",
-                        hoverBorderColor: "#e35f00",
-                        data: [props.historic[0]['newCases'],
-                        props.historic[1]['newCases'],
-                        props.historic[2]['newCases'],
-                        props.historic[3]['newCases'],
-                        props.historic[4]['newCases'],
-                        props.historic[5]['newCases'],
-                        props.historic[6]['newCases'],
-                        props.historic[7]['newCases'],
-                        props.historic[8]['newCases'],
-                        props.historic[9]['newCases']
-                    ],
-                    }
-                    ]
-                }}
-                options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                }}
-                />
-        </div>
-    </div>
-)
+const LineChart = ({ historic = [] }) => {
+    const labels = historic.map((entry) => entry.date);
+    const totalCases = historic.map((entry) => entry.cases);
+    const newCases = historic.map((entry) => entry.newCases);
+
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            y: {
+                ticks: {
+                    callback: (value) => Number(value).toLocaleString(),
+                },
+            },
+            x: {
+                ticks: {
+                    autoSkip: true,
+                    maxRotation: 0,
+                },
+            },
+        },
+    };
+
+    return (
+        <Row className="g-2">
+            <Col xs={12}>
+            <Card>
+            <Card.Header className='text-start fw-semibold fs-6 py-2'>Historical Total Cases</Card.Header>
+            <Card.Body className='p-2'>
+            <div className='ratio ratio-21x9'>
+                    <Bar
+                        data={{
+                            labels,
+                            datasets: [
+                                {
+                                    label: 'Historical Total Cases',
+                                    borderWidth: 1,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)'
+                                    ],
+                                    hoverBackgroundColor: "#ed873e",
+                                    hoverBorderColor: "#e35f00",
+                                    data: totalCases,
+                                }
+                            ]
+                        }}
+                        options={commonOptions}
+                    />
+                </div>
+                </Card.Body>
+            </Card>
+            </Col>
+            <Col xs={12}>
+            <Card>
+                <Card.Header className='text-start fw-semibold fs-6 py-2'>Historical New Cases</Card.Header>
+                <Card.Body className='p-2'>
+                <div className='ratio ratio-21x9'>
+                    <Line
+                        data={{
+                            labels,
+                            datasets: [
+                                {
+                                    label: 'Historical New Cases',
+                                    borderWidth: 1,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)'
+                                    ],
+                                    fill: false,
+                                    hoverBackgroundColor: "#ed873e",
+                                    hoverBorderColor: "#e35f00",
+                                    data: newCases,
+                                }
+                            ]
+                        }}
+                        options={commonOptions}
+                    />
+                </div>
+                </Card.Body>
+            </Card>
+            </Col>
+        </Row>
+    );
+}
 
 export default LineChart
